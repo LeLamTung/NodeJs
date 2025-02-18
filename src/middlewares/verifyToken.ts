@@ -18,7 +18,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction): vo
   // Lấy token từ header Authorization
   const token = req.header("Authorization")?.split(" ")[1];
 
-  // Nếu không có token thì trả về lỗi 403 và kết thúc middleware
+  // Nếu không có token thì trả về lỗi 403
   if (!token) {
     res.status(403).json({ message: "No token provided" });
     return;
@@ -29,7 +29,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction): vo
     const decoded = jwt.verify(token, SECRET_KEY) as JwtPayload;
     req.user = decoded;
 
-    // Nếu hợp lệ thì tiếp tục middleware tiếp theo
+    // Tiếp tục thực hiện middleware tiếp theo
     next();
   } catch (err) {
     // Token không hợp lệ

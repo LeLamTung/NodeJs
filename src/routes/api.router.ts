@@ -7,7 +7,12 @@ import { verifyToken } from "@middlewares/verifyToken";
 const app: Express = express();
 const router: Router = express.Router();
 
+//Login
+router.post('/admin/user/login', (req: Request, res:Response)=>{
+    UserApiController.login(req, res);
+});
 //ROLEROLE
+router.use(verifyToken);
 router.get('/admin/role/list', (req: Request, res: Response) => {
     RoleApiController.getAllRoles(req, res);
 });
