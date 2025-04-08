@@ -19,11 +19,38 @@ class RoleApiController {
             res.json(data);
         }
     }
+    static async getRoleById(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id, 10);
+    
+            if (isNaN(id)) {
+                return res.status(400).json({ message: "ID không hợp lệ" });
+            }
+    
+            const role = await RoleService.getRoleById(id); // Thêm await
+    
+            if (!role) {
+                return res.status(404).json({ message: "Role không tồn tại" });
+            }
+    
+            res.json({
+                cod: 200,
+                message: "Lấy dữ liệu thành công",
+                data: {
+                    idRole: role.idRole,
+                }
+            });
+        } catch (error) {
+            console.error("Lỗi khi lấy thông tin role:", error);
+            res.status(500).json({ message: "Lỗi server" });
+        }
+    }
+    
     static async storeRole(req: Request, res:Response) {
         try {
             const Role = await RoleService.createRole(req.body);
             const data = {
-                "cod": 200,
+                "cod": 201,
                 "message": "Thêm mới thành công",
                 "data": Role,
             }
@@ -41,7 +68,7 @@ class RoleApiController {
         try {
             const id = parseInt(req.params.id,10);  
             console.log("day la id:"+id);
-            const role = await RoleService.updateRole(id,req.body);
+            const role = await RoleService.updateRole(req.body);
             const data = {
                 "cod": 200,
                 "message": "Cập nhật thành công",

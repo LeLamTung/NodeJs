@@ -6,12 +6,12 @@ class Images {
     idImage?: number
 
     @Column()
-    imageLink?: string
+    ImageLink?: string
 
     @Column()
-    mainImage?: boolean
+    MainImage?: boolean
 
-    @ManyToOne(() => Products,(products:Products)=>products.images)
+    @ManyToOne(() => Products,(Products:Products)=>Products.Images)
     Product?: Products; 
 }
 

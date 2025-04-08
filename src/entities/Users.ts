@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, Table, ManyToMany, ManyToOne, OneToMany, CreateDateColumn } from "typeorm"
 import Role from "./Role"
-import Bill from "./Bill"
+import Order from "./Order"
 @Entity({name: "users"})
 class Users {
     @PrimaryGeneratedColumn()
@@ -12,22 +12,20 @@ class Users {
     @Column({
         unique: true,
     })
-    email?: string
+    Email?: string
 
     @Column()
-    password?: string
+    Password?: string
 
     @Column()
-    isActive?: boolean
+    IsActive?: boolean
 
     @CreateDateColumn()
-    createdAt?: Date
+    CreatedAt?: Date
 
-    @ManyToOne(() => Role,(role:Role)=>role.users)
-    role?: Role;
+    @ManyToOne(() => Role,(Role:Role)=>Role.Users)
+    Role?: Role;
 
-    @OneToMany(() => Bill,(bill:Bill)=>bill.idUser)
-    bill?: Bill[];
 }
 
 export default Users;

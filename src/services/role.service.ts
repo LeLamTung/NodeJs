@@ -6,10 +6,24 @@ class RoleService {
         const data: any = await roleRepository.find()
         return data;
     }
+    static async getRoleById(id: number): Promise<Role | null> {
+        try {
+            const role = await roleRepository.findOneBy({ idRole: id });
+    
+            if (!role) {
+                throw new Error("Role không tồn tại");
+            }
+    
+            return role;
+        } catch (error) {
+            console.error("Lỗi khi lấy thông tin Role:", error);
+            throw new Error("Lỗi khi lấy thông tin Role");
+        }
+    }
     static async createRole(data: any) {
-        const { nameRole } = data;
+        const { NameRole } = data;
         const r1: Role = new Role();
-        r1.nameRole = nameRole;
+        r1.NameRole = NameRole;
         return await roleRepository.save(r1);
     }
     static async deleteRole(idRole: number) {
@@ -23,13 +37,16 @@ class RoleService {
     }
     
     
-    static async updateRole(idRole:number , data: any):Promise<Role> {
-        const {  nameRole } = data;
-        console.log("Role update",data)
-        const r1 = await roleRepository.findOneBy({idRole});
-        if (!r1) throw new Error("Role not found");
-        r1.nameRole = nameRole || r1.nameRole;
-        return await roleRepository.save(r1);
+    static async updateRole(data: any): Promise<Role> {
+        const { idRole, NameRole } = data;
+        if (!idRole) throw new Error("Thiếu ID người dùng");
+    
+        const role = await roleRepository.findOneBy({ idRole });
+        if (!role) throw new Error("Role không tồn tại");
+    
+        role.NameRole = NameRole || role.NameRole;
+       
+        return await roleRepository.save(role);
     }
 }
 export default RoleService;

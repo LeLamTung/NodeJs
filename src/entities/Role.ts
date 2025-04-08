@@ -7,9 +7,9 @@ class Role {
     idRole?: number;
 
     @Column()
-    nameRole?: string;
+    NameRole?: string;
 
-    @OneToMany(()=> User,(user:User)=> user.role)
-    users?: User[];
+    @OneToMany(()=> User,(User:User)=> User.Role)
+    Users?: User[];
 }
 export default Role;

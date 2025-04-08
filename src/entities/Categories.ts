@@ -12,7 +12,7 @@ class Categories {
     CategoryImage?: string
 
     @OneToMany(() => Products,(products:Products)=>products.Category)
-    products?: Products[];
+    Products?: Products[];
 }
 
 export default Categories;

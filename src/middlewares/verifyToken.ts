@@ -15,8 +15,8 @@ declare global {
 }
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction): void => {
-  // Lấy token từ header Authorization
-  const token = req.header("Authorization")?.split(" ")[1];
+  // Lấy token từ cookie
+  const token = req.cookies.token;
 
   // Nếu không có token thì trả về lỗi 403
   if (!token) {

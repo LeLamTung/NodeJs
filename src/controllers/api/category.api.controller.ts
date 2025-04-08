@@ -19,43 +19,57 @@ class CategoriesApiController {
             res.json(data);
         }
     }
-    static async storeCategories(req: Request, res:Response) {
+    static async getCategoryById(req: Request, res: Response) {
         try {
-            const Categories = await CategoriesService.createCategories(req,res);
+            const Categories: Categories[] = await CategoriesService.getCategoryById(req);
             const data = {
+                "cod": 200,
+                "data": Categories,
+            }
+            res.json(data);
+        }
+        catch (error) {
+            const data = {
+                "cod": 500,
+                "message": "Server error",
+            }
+            res.json(data);
+        }
+    }
+    static async storeCategories(req: Request, res: Response) {
+        try {
+            const Categories = await CategoriesService.createCategories(req, res);
+            res.json({
                 "cod": 200,
                 "message": "Thêm mới thành công",
                 "data": Categories,
-            }
-            res.json(data);
-        }
-        catch (error) {
-            const data = {
+            });
+        } catch (error) {
+            res.json({
                 "cod": 500,
                 "message": "Server error",
-            }
-            res.json(data);
+            });
         }
     }
+    
     static async updateCategories(req: Request, res: Response) {
         try {
-            const id = parseInt(req.params.id, 10);
-            const Categories = await CategoriesService.updateCategories(id,req,res);
-            const data = {
+            const Categories = await CategoriesService.updateCategories( req, res);
+            res.json({
                 "cod": 200,
                 "message": "Cập nhật thành công",
                 "data": Categories,
-            }
-            res.json(data);
-        }
-        catch (error) {
-            const data = {
+            });
+        } catch (error) {
+            res.json({
                 "cod": 500,
                 "message": "Server error",
-            }
-            res.json(data);
+            });
         }
     }
+    
+    
+    
     static async deleteCategories(req: Request, res: Response) {
         try {
             const id = parseInt(req.params.id, 10);    
@@ -85,6 +99,12 @@ class CategoriesApiController {
             });
         }
     }
+    // static async index(req: Request, res: Response) {
+    //     const result = await CategoriesService.getDisplayCategories();
+    //     const data = result.data;
+    //     const {main} = data;
+    //     res.render('ta.ejs', main, datta);
+    // }
     
 }
 export default CategoriesApiController;

@@ -1,0 +1,16 @@
+# Loại bỏ thư mục node_modules
+node_modules/
+
+# Loại bỏ tất cả các file .env (thường chứa thông tin nhạy cảm)
+*.env
+
+# Loại bỏ thư mục build hoặc dist
+build/
+dist/
+
+# Loại bỏ file log
+*.log
+
+# Loại bỏ thư mục tạm thời của hệ điều hành
+.DS_Store
+Thumbs.db

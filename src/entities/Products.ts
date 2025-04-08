@@ -1,47 +1,45 @@
 import { Entity, PrimaryGeneratedColumn, Column, Table, ManyToMany, ManyToOne, OneToMany } from "typeorm"
 import Images from "./Images"
 import Categories from "./Categories"
-import Bill from "./Bill"
-@Entity({name: "products"})
+import OrderDetail from "./OrderDetail"
+@Entity({ name: "products" })
 class Products {
     @PrimaryGeneratedColumn()
     idProduct?: number
 
     @Column()
-    productName?: string
+    ProductName?: string
 
     @Column()
-    imageName?: string
+    ImageName?: string
 
     @Column()
-    originalPrice?: number
+    OriginalPrice?: number
 
     @Column()
-    salePrice?: number
+    SalePrice?: number
 
     @Column()
-    salePercentage?: number
+    SalePercentage?: number
 
-    @Column()
-    description?: string
+    @Column({ type: 'text', nullable: true })
+    Description?: string;
 
-    @Column()
-    isSales?: boolean
+    @Column({ type: 'boolean' })
+    IsSales?: number
 
-    @Column()
-    isHome?: boolean
+    @Column({ type: 'boolean' })
+    IsHome?: number
 
-    @Column()
-    status?: boolean
-
-    @ManyToOne(() => Categories,(categories:Categories)=>categories.products)
+    // moi quan hệ với image
+    @OneToMany(() => Images, (Images: Images) => Images.Product, { cascade: true, onDelete: "CASCADE" })
+    Images?: Images[];
+    // moi quan he voi category 
+    @ManyToOne(() => Categories, (Category) => Category.Products, { cascade: true, onDelete: "CASCADE", eager: true })
     Category?: Categories;
 
-    @OneToMany(() => Images,(images:Images)=>images.Product)
-    images?: Images[];
-
-    @ManyToOne(() => Bill,(bill:Bill)=>bill.idBill)
-    bill?: Bill;
+    @OneToMany(() => OrderDetail, (orderDetail: OrderDetail) => orderDetail.Product)
+    OrderDetails?: OrderDetail[];
 }
 
 export default Products;
